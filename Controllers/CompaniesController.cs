@@ -18,6 +18,14 @@ namespace ApiService.Controllers
             _context = context;
         }
 
+        [HttpGet]
+        [Route("companies/list")]
+        public async Task<ActionResult<IEnumerable<Company>>> GetCompanyList()
+        {
+            var companies = await _context.Company.ToListAsync();
+            return Ok(companies.Select(c => new { c.CompanyId, c.CompanyName }).ToList());
+        }
+
         // GET: api/Companies
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Company>>> GetCompany()
