@@ -20,14 +20,14 @@ namespace ApiService
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddDbContext<MainDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DatabaseConnectionString")));
-			services.AddCors(c =>
-			{
-				c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
-			});
 			services.AddControllersWithViews()
 				.AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 			);
 			services.AddControllers();
+			services.AddCors(c =>
+			{
+				c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+			});
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,6 +36,8 @@ namespace ApiService
 			{
 				app.UseDeveloperExceptionPage();
 			}
+
+			app.UseCors(options => options.AllowAnyOrigin());
 
 			app.UseHttpsRedirection();
 
@@ -47,6 +49,7 @@ namespace ApiService
 			{
 				endpoints.MapControllers();
 			});
+
 		}
 	}
 }

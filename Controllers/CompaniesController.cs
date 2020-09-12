@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiService.Models;
+using System;
 
 namespace ApiService.Controllers
 {
@@ -18,12 +19,18 @@ namespace ApiService.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        [Route("companies/list")]
+        [Route("GetCompanyList")]
         public async Task<ActionResult<IEnumerable<Company>>> GetCompanyList()
         {
-            var companies = await _context.Company.ToListAsync();
-            return Ok(companies.Select(c => new { c.CompanyId, c.CompanyName }).ToList());
+            try
+            {
+                var companies = await _context.Company.Select(c => new { c.CompanyId, c.CompanyName }).ToListAsync();
+                return Ok(companies);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: api/Companies
