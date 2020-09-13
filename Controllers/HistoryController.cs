@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiService.Models;
+using ApiService.Dtos;
+using AutoMapper;
 
 namespace ApiService.Controllers
 {
@@ -13,8 +15,9 @@ namespace ApiService.Controllers
     public class HistoryController : ControllerBase
     {
         private readonly MainDBContext _context;
+        private readonly IMapper _mapper;
 
-        public HistoryController(MainDBContext context)
+        public HistoryController(MainDBContext context, IMapper mapper)
         {
             _context = context;
         }
@@ -96,9 +99,11 @@ namespace ApiService.Controllers
         /// POST a new history
         /// </summary>
         [HttpPost]
-        public async Task<ActionResult<History>> PostHistory(History history)
+        public async Task<ActionResult<History>> PostHistory(HistoryPostDto history)
         {
-            _context.History.Add(history);
+            var entity = _mapper.Map<History>(history);
+            _context.History.Add(entity);
+
             try
             {
                 await _context.SaveChangesAsync();

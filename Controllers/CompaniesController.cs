@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiService.Models;
 using System;
+using ApiService.Dtos;
+using AutoMapper;
 
 namespace ApiService.Controllers
 {
@@ -13,9 +15,11 @@ namespace ApiService.Controllers
     public class CompaniesController : ControllerBase
     {
         private readonly MainDBContext _context;
+        private readonly IMapper _mapper;
 
-        public CompaniesController(MainDBContext context)
+        public CompaniesController(MainDBContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
@@ -113,9 +117,11 @@ namespace ApiService.Controllers
         /// POST a new company
         /// </summary>
         [HttpPost]
-        public async Task<ActionResult<Company>> PostCompany(Company company)
+        public async Task<ActionResult<Company>> PostCompany(CompanyPostDto company)
         {
-            _context.Company.Add(company);
+            var entity = _mapper.Map<Company>(company);
+            _context.Company.Add(entity);
+
             try
             {
                 await _context.SaveChangesAsync();

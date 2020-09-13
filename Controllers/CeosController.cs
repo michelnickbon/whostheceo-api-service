@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiService.Models;
 using System;
+using ApiService.Dtos;
+using AutoMapper;
 
 namespace ApiService.Controllers
 {
@@ -13,9 +15,11 @@ namespace ApiService.Controllers
     public class CeosController : ControllerBase
     {
         private readonly MainDBContext _context;
+        private readonly IMapper _mapper;
 
-        public CeosController(MainDBContext context)
+        public CeosController(MainDBContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
@@ -96,9 +100,11 @@ namespace ApiService.Controllers
         /// POST a new CEO
         /// </summary>
         [HttpPost]
-        public async Task<ActionResult<Ceo>> PostCeo(Ceo ceo)
+        public async Task<ActionResult<Ceo>> PostCeo(CeoPostDto ceo)
         {
-            _context.Ceo.Add(ceo);
+            var entity = _mapper.Map<Ceo>(ceo);
+            _context.Ceo.Add(entity);
+
             try
             {
                 await _context.SaveChangesAsync();
