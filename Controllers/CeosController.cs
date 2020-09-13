@@ -19,7 +19,10 @@ namespace ApiService.Controllers
             _context = context;
         }
 
-        // GET: api/Ceos
+        /// <summary>
+        /// GET: api/Ceos
+        /// Returns all available CEO's
+        /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ceo>>> GetCeo()
         {
@@ -33,7 +36,10 @@ namespace ApiService.Controllers
             }
         }
 
-        // GET: api/Ceos/5
+        /// <summary>
+        /// GET: api/Ceos/1
+        /// Returns a specific CEO specified by id
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Ceo>> GetCeo(int id)
         {
@@ -52,9 +58,10 @@ namespace ApiService.Controllers
             }
         }
 
-        // PUT: api/Ceos/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// PUT: api/Ceos/1
+        /// PUT a specific CEO specified by id
+        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCeo(int id, Ceo ceo)
         {
@@ -84,9 +91,10 @@ namespace ApiService.Controllers
             return NoContent();
         }
 
-        // POST: api/Ceos
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// POST: api/Ceos
+        /// POST a new CEO
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<Ceo>> PostCeo(Ceo ceo)
         {
@@ -110,7 +118,10 @@ namespace ApiService.Controllers
             return CreatedAtAction("GetCeo", new { id = ceo.CeoId }, ceo);
         }
 
-        // DELETE: api/Ceos/5
+        /// <summary>
+        /// DELETE: api/Ceos/1
+        /// Delete a CEO
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Ceo>> DeleteCeo(int id)
         {

@@ -19,6 +19,10 @@ namespace ApiService.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// GET: api/Companies/GetCompanyList
+        /// Returns a filtered list of all companies
+        /// </summary>
         [Route("GetCompanyList")]
         public async Task<ActionResult<IEnumerable<Company>>> GetCompanyList()
         {
@@ -33,7 +37,10 @@ namespace ApiService.Controllers
             }
         }
 
-        // GET: api/Companies
+        /// <summary>
+        /// GET: api/Companies
+        /// Returns all available companies
+        /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Company>>> GetCompany()
         {
@@ -46,7 +53,10 @@ namespace ApiService.Controllers
             }
         }
 
-        // GET: api/Companies/5
+        /// <summary>
+        /// GET: api/Companies/5
+        /// Get a specific company
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> GetCompany(int id)
         {
@@ -65,9 +75,10 @@ namespace ApiService.Controllers
             }
         }
 
-        // PUT: api/Companies/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// PUT: api/Companies/5
+        /// PUT a specific company
+        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCompany(int id, Company company)
         {
@@ -97,9 +108,10 @@ namespace ApiService.Controllers
             return NoContent();
         }
 
-        // POST: api/Companies
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// POST: api/Companies
+        /// POST a new company
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<Company>> PostCompany(Company company)
         {
@@ -123,7 +135,10 @@ namespace ApiService.Controllers
             return CreatedAtAction("GetCompany", new { id = company.CompanyId }, company);
         }
 
-        // DELETE: api/Companies/5
+        /// <summary>
+        /// DELETE: api/Companies/5
+        /// Delete a company
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Company>> DeleteCompany(int id)
         {

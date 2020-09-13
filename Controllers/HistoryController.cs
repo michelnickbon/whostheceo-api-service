@@ -10,16 +10,19 @@ namespace ApiService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HistoriesController : ControllerBase
+    public class HistoryController : ControllerBase
     {
         private readonly MainDBContext _context;
 
-        public HistoriesController(MainDBContext context)
+        public HistoryController(MainDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Histories
+        /// <summary>
+        /// GET: api/History
+        /// Returns full history
+        /// </summary>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<History>>> GetHistory()
         {
@@ -33,7 +36,10 @@ namespace ApiService.Controllers
             }
         }
 
-        // GET: api/Histories/5
+        /// <summary>
+        /// GET: api/History/5
+        /// Get a specific history
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<ActionResult<History>> GetHistory(int id)
         {
@@ -52,9 +58,10 @@ namespace ApiService.Controllers
             }
         }
 
-        // PUT: api/Histories/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// PUT: api/History/5
+        /// PUT a specific history
+        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutHistory(int id, History history)
         {
@@ -84,9 +91,10 @@ namespace ApiService.Controllers
             return NoContent();
         }
 
-        // POST: api/Histories
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        /// <summary>
+        /// POST: api/History
+        /// POST a new history
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<History>> PostHistory(History history)
         {
@@ -110,7 +118,10 @@ namespace ApiService.Controllers
             return CreatedAtAction("GetHistory", new { id = history.HistoryId }, history);
         }
 
-        // DELETE: api/Histories/5
+        /// <summary>
+        /// DELETE: api/History/5
+        /// DELETE a specific history
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<ActionResult<History>> DeleteHistory(int id)
         {
