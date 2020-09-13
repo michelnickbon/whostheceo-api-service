@@ -37,23 +37,32 @@ namespace ApiService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Company>>> GetCompany()
         {
-            return await _context.Company.ToListAsync();
+            try
+            {
+                return await _context.Company.ToListAsync();
+            } catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: api/Companies/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Company>> GetCompany(int id)
         {
-            var company = await _context.Company
-                .Include(c => c.Ceo)
-                .FirstOrDefaultAsync(c => c.CompanyId == id);
-
-            if (company == null)
+            try
             {
-                return NotFound();
+                var company = await _context.Company.Include(c => c.Ceo).FirstOrDefaultAsync(c => c.CompanyId == id);
+                if (company == null)
+                {
+                    return NotFound();
+                }
+                return company;
             }
-
-            return company;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // PUT: api/Companies/5
@@ -118,16 +127,22 @@ namespace ApiService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Company>> DeleteCompany(int id)
         {
-            var company = await _context.Company.FindAsync(id);
-            if (company == null)
+            try
             {
-                return NotFound();
+                var company = await _context.Company.FindAsync(id);
+                if (company == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Company.Remove(company);
+                await _context.SaveChangesAsync();
+                return company;
+            } 
+            catch (Exception ex)
+            {
+                throw ex;
             }
-
-            _context.Company.Remove(company);
-            await _context.SaveChangesAsync();
-
-            return company;
         }
 
         private bool CompanyExists(int id)

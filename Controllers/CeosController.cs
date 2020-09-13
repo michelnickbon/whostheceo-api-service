@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiService.Models;
+using System;
 
 namespace ApiService.Controllers
 {
@@ -22,21 +23,33 @@ namespace ApiService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ceo>>> GetCeo()
         {
-            return await _context.Ceo.ToListAsync();
+            try
+            {
+                return await _context.Ceo.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: api/Ceos/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Ceo>> GetCeo(int id)
         {
-            var ceo = await _context.Ceo.FindAsync(id);
-
-            if (ceo == null)
+            try
             {
-                return NotFound();
+                var ceo = await _context.Ceo.FindAsync(id);
+                if (ceo == null)
+                {
+                    return NotFound();
+                }
+                return ceo;
             }
-
-            return ceo;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // PUT: api/Ceos/5
@@ -101,16 +114,21 @@ namespace ApiService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Ceo>> DeleteCeo(int id)
         {
-            var ceo = await _context.Ceo.FindAsync(id);
-            if (ceo == null)
+            try
             {
-                return NotFound();
+                var ceo = await _context.Ceo.FindAsync(id);
+                if (ceo == null)
+                {
+                    return NotFound();
+                }
+                _context.Ceo.Remove(ceo);
+                await _context.SaveChangesAsync();
+                return ceo;
             }
-
-            _context.Ceo.Remove(ceo);
-            await _context.SaveChangesAsync();
-
-            return ceo;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private bool CeoExists(int id)

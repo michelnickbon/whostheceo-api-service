@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiService.Models;
@@ -24,21 +23,33 @@ namespace ApiService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<History>>> GetHistory()
         {
-            return await _context.History.Include(h => h.Company).ToListAsync();
+            try
+            {
+                return await _context.History.Include(h => h.Company).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         // GET: api/Histories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<History>> GetHistory(int id)
         {
-            var history = await _context.History.FindAsync(id);
-
-            if (history == null)
+            try
             {
-                return NotFound();
+                var history = await _context.History.FindAsync(id);
+                if (history == null)
+                {
+                    return NotFound();
+                }
+                return history;
+            } 
+            catch (Exception ex)
+            {
+                throw ex;
             }
-
-            return history;
         }
 
         // PUT: api/Histories/5
@@ -103,16 +114,21 @@ namespace ApiService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<History>> DeleteHistory(int id)
         {
-            var history = await _context.History.FindAsync(id);
-            if (history == null)
+            try
             {
-                return NotFound();
+                var history = await _context.History.FindAsync(id);
+                if (history == null)
+                {
+                    return NotFound();
+                }
+                _context.History.Remove(history);
+                await _context.SaveChangesAsync();
+                return history;
             }
-
-            _context.History.Remove(history);
-            await _context.SaveChangesAsync();
-
-            return history;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private bool HistoryExists(int id)
