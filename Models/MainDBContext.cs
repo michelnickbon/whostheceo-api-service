@@ -23,7 +23,8 @@ namespace ApiService.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer("");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-QK4HUCR;Database=MainDB;Trusted_Connection=True;");
             }
         }
 
@@ -45,17 +46,11 @@ namespace ApiService.Models
 
                 entity.Property(e => e.FullName)
                     .HasColumnName("full_name")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
-
-                entity.Property(e => e.ImageRef)
-                    .HasColumnName("image_ref")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
-
-                entity.Property(e => e.ShortBio)
-                    .HasColumnName("short_bio")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.ImageRef).HasColumnName("image_ref");
+
+                entity.Property(e => e.ShortBio).HasColumnName("short_bio");
             });
 
             modelBuilder.Entity<Company>(entity =>
@@ -69,13 +64,15 @@ namespace ApiService.Models
                 entity.Property(e => e.CompanyDescription)
                     .IsRequired()
                     .HasColumnName("company_description")
-                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.CompanyName)
                     .HasColumnName("company_name")
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.CompanyWebsite)
+                    .HasColumnName("company_website")
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.Ceo)
                     .WithMany(p => p.Company)

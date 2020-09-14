@@ -14,6 +14,7 @@ namespace ApiService.Models
         public string CompanyName { get; set; }
         public int? CeoId { get; set; }
         public string CompanyDescription { get; set; }
+        public string CompanyWebsite { get; set; }
 
         public virtual Ceo Ceo { get; set; }
         public virtual ICollection<History> History { get; set; }
