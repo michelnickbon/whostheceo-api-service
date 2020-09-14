@@ -34,7 +34,7 @@ namespace ApiService
 				app.UseDeveloperExceptionPage();
 			}
 
-			app.UseCors(options => options.AllowAnyOrigin());
+			app.UseCors(options => options.WithOrigins("*").AllowAnyHeader().AllowAnyMethod());
 
 			app.UseHttpsRedirection();
 

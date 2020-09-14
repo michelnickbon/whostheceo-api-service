@@ -20,6 +20,7 @@ namespace ApiService.Controllers
         public HistoryController(MainDBContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -101,6 +102,11 @@ namespace ApiService.Controllers
         [HttpPost]
         public async Task<ActionResult<History>> PostHistory(HistoryPostDto history)
         {
+            if (history == null)
+            {
+                return BadRequest("Malformed request"); // 400
+            }
+
             var entity = _mapper.Map<History>(history);
             _context.History.Add(entity);
 
