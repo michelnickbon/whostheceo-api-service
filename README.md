@@ -9,4 +9,4 @@ This application acts as the backend implementation of [whostheceo-frontend](htt
 - Automatic tests are coming soon
 
 # Database schema
-![Scheme](readme_img/schema.PNG)
+![Scheme](schema.PNG)
