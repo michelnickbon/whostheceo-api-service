@@ -6,7 +6,7 @@ This application acts as the backend implementation of [whostheceo-vue-app](http
 - .Net Core 3.1 Web API
 - Entity Framework
 - SQL Server 2019
-- Automatic tests are coming soon
+- xUnit
 
 # Preview
 ![Scheme](preview.PNG)
