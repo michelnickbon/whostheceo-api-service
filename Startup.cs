@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
+using Microsoft.OpenApi.Models;
 
 namespace ApiService
 {
@@ -25,6 +26,7 @@ namespace ApiService
 			services.AddControllers();
 			services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()); });
 			services.AddAutoMapper(typeof(Startup));
+			services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" }));
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -33,6 +35,12 @@ namespace ApiService
 			{
 				app.UseDeveloperExceptionPage();
 			}
+
+			app.UseSwagger();
+			app.UseSwaggerUI(c =>
+			{
+				c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
+			});
 
 			app.UseCors(options => options.WithOrigins("*").AllowAnyHeader().AllowAnyMethod());
 

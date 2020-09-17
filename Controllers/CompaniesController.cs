@@ -27,6 +27,7 @@ namespace ApiService.Controllers
         /// GET: api/Companies/GetCompanyList
         /// Returns a filtered list of all companies
         /// </summary>
+        [HttpGet("GetCompanyList")]
         [Route("GetCompanyList")]
         public async Task<ActionResult<IEnumerable<Company>>> GetCompanyList()
         {
