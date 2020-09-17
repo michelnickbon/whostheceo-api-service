@@ -100,7 +100,7 @@ namespace ApiService.Controllers
         /// POST a new history
         /// </summary>
         [HttpPost]
-        public async Task<ActionResult<History>> PostHistory(HistoryPostDto history)
+        public async Task<ActionResult<History>> PostHistory([FromBody]HistoryPostDto history)
         {
             if (history == null)
             {

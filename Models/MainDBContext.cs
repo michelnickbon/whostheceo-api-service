@@ -31,9 +31,7 @@ namespace ApiService.Models
         {
             modelBuilder.Entity<Ceo>(entity =>
             {
-                entity.Property(e => e.CeoId)
-                    .HasColumnName("ceo_id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.CeoId).HasColumnName("ceo_id");
 
                 entity.Property(e => e.ActiveFrom)
                     .HasColumnName("active_from")
@@ -54,9 +52,7 @@ namespace ApiService.Models
 
             modelBuilder.Entity<Company>(entity =>
             {
-                entity.Property(e => e.CompanyId)
-                    .HasColumnName("company_id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.CompanyId).HasColumnName("company_id");
 
                 entity.Property(e => e.CeoId).HasColumnName("ceo_id");
 
@@ -81,9 +77,7 @@ namespace ApiService.Models
 
             modelBuilder.Entity<History>(entity =>
             {
-                entity.Property(e => e.HistoryId)
-                    .HasColumnName("history_id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.HistoryId).HasColumnName("history_id");
 
                 entity.Property(e => e.CompanyId).HasColumnName("company_id");
 
