@@ -26,7 +26,7 @@ namespace ApiService
 			services.AddControllers();
 			services.AddCors(c => { c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin()); });
 			services.AddAutoMapper(typeof(Startup));
-			services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" }));
+			services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Service", Version = "v1" }));
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -8,5 +8,8 @@ This application acts as the backend implementation of [whostheceo-vue-app](http
 - SQL Server 2019
 - Automatic tests are coming soon
 
+# Preview
+![Scheme](preview.PNG)
+
 # Database schema
 ![Scheme](schema.PNG)

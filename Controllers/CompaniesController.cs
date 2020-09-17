@@ -24,10 +24,10 @@ namespace ApiService.Controllers
         }
 
         /// <summary>
-        /// GET: api/Companies/GetCompanyList
+        /// GET: api/Companies/List
         /// Returns a filtered list of all companies
         /// </summary>
-        [HttpGet("GetCompanyList")]
+        [HttpGet("List")]
         public async Task<ActionResult<IEnumerable<Company>>> GetCompanyList()
         {
             try
