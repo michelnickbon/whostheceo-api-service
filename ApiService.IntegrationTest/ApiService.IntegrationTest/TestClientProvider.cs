@@ -14,7 +14,7 @@ namespace ApiService.IntegrationTest
 
 		public TestClientProvider()
 		{
-			var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+			var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.Development.json").Build();
 			var server = new TestServer(new WebHostBuilder().UseConfiguration(configuration).UseStartup<Startup>());
 			Client = server.CreateClient();
 		}
