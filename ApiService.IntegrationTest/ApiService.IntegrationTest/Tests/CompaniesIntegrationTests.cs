@@ -2,6 +2,9 @@ using Xunit;
 using ApiService.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using ApiService.Dtos;
+using System.Net.Http;
+using System.Text;
 
 namespace ApiService.IntegrationTest.Tests
 {
@@ -11,38 +14,46 @@ namespace ApiService.IntegrationTest.Tests
 		public async void GetAllCompanies_ShouldReturnOK()
 		{
 			using var client = new TestClientProvider().Client;
-			var response = await client.GetAsync("/api/companies");
-			var content = await response.Content.ReadAsStringAsync();
-			var entities = JsonConvert.DeserializeObject<List<Company>>(content);
+			var request = await client.GetAsync("/api/companies");
+			var response = await request.Content.ReadAsStringAsync();
+			var entities = JsonConvert.DeserializeObject<List<Company>>(response);
 
-			response.EnsureSuccessStatusCode();
-			Assert.NotNull(response);
+			request.EnsureSuccessStatusCode();
+			Assert.NotNull(request);
 			Assert.NotNull(entities[0].GetType().GetProperty("CompanyId"));
-			Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
+			Assert.Equal("application/json; charset=utf-8", request.Content.Headers.ContentType.ToString());
 		}
 
 		[Fact]
 		public async void GetCompanyList_ShouldReturnOK()
 		{
 			using var client = new TestClientProvider().Client;
-			var response = await client.GetAsync("/api/Companies/List");
-			var content = await response.Content.ReadAsStringAsync();
+			var request = await client.GetAsync("/api/Companies/List");
+			var response = await request.Content.ReadAsStringAsync();
 
-			response.EnsureSuccessStatusCode();
-			Assert.NotNull(response);
-			Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
+			request.EnsureSuccessStatusCode();
+			Assert.NotNull(request);
+			Assert.Equal("application/json; charset=utf-8", request.Content.Headers.ContentType.ToString());
 		}
 
 		[Fact]
-		public async void Post_ShouldReturnOK()
+		public async void Post_ShouldReturnCreatedCompany()
 		{
-			using var client = new TestClientProvider().Client;
-			var response = await client.GetAsync("/api/Companies/List");
-			var content = await response.Content.ReadAsStringAsync();
+			var company = new CompanyPostDto();
+			company.CompanyName = "TestCompany";
+			company.CompanyDescription = "Test description";
 
-			response.EnsureSuccessStatusCode();
-			Assert.NotNull(response);
-			Assert.Equal("application/json; charset=utf-8", response.Content.Headers.ContentType.ToString());
+			var json = JsonConvert.SerializeObject(company);
+			var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+			using var client = new TestClientProvider().Client;
+			var request = await client.PostAsync("/api/Companies", content);
+			var response = await request.Content.ReadAsStringAsync();
+			var createdCompany = JsonConvert.DeserializeObject<Company>(response);
+
+			request.EnsureSuccessStatusCode();
+			Assert.Equal(createdCompany.CompanyName, company.CompanyName);
+			Assert.Equal(createdCompany.CompanyDescription, company.CompanyDescription);
 		}
 
 	}
