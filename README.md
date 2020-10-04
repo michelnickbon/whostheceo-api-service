@@ -11,6 +11,3 @@ This application acts as the backend implementation of [whostheceo-vue-app](http
 
 # Preview
 ![Scheme](preview.PNG)
-
-# Database schema
-![Scheme](schema.PNG)
