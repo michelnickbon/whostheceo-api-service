@@ -1,6 +1,6 @@
 ﻿namespace ApiService.Dtos
 {
-	public class CompanyPostDto
+	public class CompanyPutDto
 	{
         public int CompanyId { get; set; }
         public string CompanyName { get; set; }

@@ -55,6 +55,32 @@ namespace ApiService.IntegrationTest.Tests
 			Assert.Equal(createdCompany.CompanyName, company.CompanyName);
 			Assert.Equal(createdCompany.CompanyDescription, company.CompanyDescription);
 		}
+		
+		[Fact]
+		public async void Put_ShouldReturnOK()
+		{
+			var company = new CompanyPostDto();
+			company.CompanyId = 1;
+			company.CompanyName = "NewTestCompany";
+			company.CompanyDescription = "New test description";
+
+			var json = JsonConvert.SerializeObject(company);
+			var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+			using var client = new TestClientProvider().Client;	
+			var request = await client.PutAsync("/api/Companies/" + company.CompanyId, content);
+
+			request.EnsureSuccessStatusCode();
+		}
+
+		[Fact]
+		public async void Delete_ShouldReturnOK()
+		{
+			var companyId = 5; // Temp solution
+			using var client = new TestClientProvider().Client;
+			var request = await client.DeleteAsync("/api/Companies/" + companyId);
+			request.EnsureSuccessStatusCode();
+		}
 
 	}
 }

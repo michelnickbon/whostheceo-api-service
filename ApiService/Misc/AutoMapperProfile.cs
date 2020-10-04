@@ -9,6 +9,7 @@ namespace ApiService.Misc
         public AutoMapperProfile()
         {
             CreateMap<CompanyPostDto, Company>();
+            CreateMap<CompanyPutDto, Company>();
             CreateMap<HistoryPostDto, History>();
             CreateMap<CeoPostDto, Ceo>();
         }

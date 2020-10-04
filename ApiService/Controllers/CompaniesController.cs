@@ -84,14 +84,16 @@ namespace ApiService.Controllers
         /// PUT a specific company
         /// </summary>
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCompany(int id, Company company)
+        public async Task<IActionResult> PutCompany(int id, CompanyPutDto company)
         {
             if (id != company.CompanyId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(company).State = EntityState.Modified;
+            var entity = _mapper.Map<Company>(company);
+
+            _context.Entry(entity).State = EntityState.Modified;
 
             try
             {
